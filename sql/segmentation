@@ -1,0 +1,488 @@
+-- ============================================================================
+-- Product Analytics Platform
+-- File Name : segmentation.sql
+--
+-- Description:
+-- Customer Segmentation Analysis
+--
+-- Business Questions:
+-- 1. Who are our highest-value customers?
+-- 2. Which devices generate the most revenue?
+-- 3. Which countries have the highest-value users?
+-- 4. Which marketing channels bring premium customers?
+-- 5. How can we segment customers using RFM Analysis?
+--
+-- Skills Demonstrated:
+-- ✔ CTE (Common Table Expressions)
+-- ✔ Window Functions
+-- ✔ NTILE()
+-- ✔ CASE WHEN
+-- ✔ Customer Segmentation
+-- ✔ RFM Analysis
+-- ✔ Revenue Analysis
+-- ✔ Business KPI Reporting
+-- ============================================================================
+
+-- ============================================================================
+-- STEP 1
+-- View Customer Dataset
+-- ============================================================================
+
+SELECT *
+FROM users
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 2
+-- New vs Returning Users
+-- ============================================================================
+
+SELECT
+
+user_type,
+
+COUNT(*) AS total_users
+
+FROM users
+
+GROUP BY user_type
+
+ORDER BY total_users DESC;
+
+-- ============================================================================
+-- STEP 3
+-- Customers by Country
+-- ============================================================================
+
+SELECT
+
+country,
+
+COUNT(*) total_customers
+
+FROM users
+
+GROUP BY country
+
+ORDER BY total_customers DESC;
+
+-- ============================================================================
+-- STEP 4
+-- Customers by Device
+-- ============================================================================
+
+SELECT
+
+device,
+
+COUNT(*) total_customers
+
+FROM users
+
+GROUP BY device
+
+ORDER BY total_customers DESC;
+
+-- ============================================================================
+-- STEP 5
+-- Revenue Generated Per Customer
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) total_orders,
+
+SUM(price) total_revenue,
+
+ROUND(AVG(price),2) average_order_value
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY total_revenue DESC;
+
+-- ============================================================================
+-- STEP 6
+-- Top 20 Highest Revenue Customers
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY revenue DESC
+
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 7
+-- Revenue-Based Customer Segmentation
+-- ============================================================================
+
+WITH customer_revenue AS
+(
+
+SELECT
+
+user_id,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+CASE
+
+WHEN revenue >= 100000 THEN 'VIP'
+
+WHEN revenue >= 50000 THEN 'High Value'
+
+WHEN revenue >= 20000 THEN 'Medium Value'
+
+ELSE 'Low Value'
+
+END customer_segment,
+
+COUNT(*) customers,
+
+ROUND(AVG(revenue),2) average_revenue
+
+FROM customer_revenue
+
+GROUP BY customer_segment
+
+ORDER BY average_revenue DESC;
+
+-- ============================================================================
+-- STEP 8
+-- Device Revenue Analysis
+-- ============================================================================
+
+SELECT
+
+u.device,
+
+COUNT(*) purchases,
+
+SUM(price) revenue,
+
+ROUND(AVG(price),2) average_order_value
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE event_name='purchase'
+
+GROUP BY u.device
+
+ORDER BY revenue DESC;
+
+-- ============================================================================
+-- STEP 9
+-- Country Revenue Analysis
+-- ============================================================================
+
+SELECT
+
+u.country,
+
+COUNT(*) purchases,
+
+SUM(price) revenue,
+
+ROUND(AVG(price),2) average_order_value
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE event_name='purchase'
+
+GROUP BY u.country
+
+ORDER BY revenue DESC;
+
+-- ============================================================================
+-- STEP 10
+-- Marketing Channel Revenue
+-- ============================================================================
+
+SELECT
+
+m.channel,
+
+COUNT(*) purchases,
+
+SUM(price) revenue,
+
+ROUND(AVG(price),2) average_order_value
+
+FROM product_events p
+
+JOIN marketing m
+
+ON p.session_id=m.session_id
+
+WHERE event_name='purchase'
+
+GROUP BY m.channel
+
+ORDER BY revenue DESC;
+
+-- ============================================================================
+-- STEP 11
+-- Purchase Frequency Per Customer
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) purchase_frequency
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY purchase_frequency DESC;
+
+-- ============================================================================
+-- STEP 12
+-- RFM Metrics
+-- ============================================================================
+
+WITH rfm AS
+(
+
+SELECT
+
+user_id,
+
+DATEDIFF(
+CURDATE(),
+MAX(DATE(timestamp))
+) recency,
+
+COUNT(*) frequency,
+
+SUM(price) monetary
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT *
+
+FROM rfm
+
+ORDER BY monetary DESC
+
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 13
+-- RFM Scoring
+-- ============================================================================
+
+WITH rfm AS
+(
+
+SELECT
+
+user_id,
+
+DATEDIFF(
+CURDATE(),
+MAX(DATE(timestamp))
+) recency,
+
+COUNT(*) frequency,
+
+SUM(price) monetary
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+user_id,
+
+recency,
+
+frequency,
+
+monetary,
+
+NTILE(5) OVER(ORDER BY recency DESC) R,
+
+NTILE(5) OVER(ORDER BY frequency ASC) F,
+
+NTILE(5) OVER(ORDER BY monetary ASC) M
+
+FROM rfm;
+
+-- ============================================================================
+-- STEP 14
+-- Final Customer Segments Using RFM
+-- ============================================================================
+
+WITH rfm AS
+(
+
+SELECT
+
+user_id,
+
+DATEDIFF(
+CURDATE(),
+MAX(DATE(timestamp))
+) recency,
+
+COUNT(*) frequency,
+
+SUM(price) monetary
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+),
+
+scores AS
+(
+
+SELECT
+
+user_id,
+
+NTILE(5) OVER(ORDER BY recency DESC) R,
+
+NTILE(5) OVER(ORDER BY frequency ASC) F,
+
+NTILE(5) OVER(ORDER BY monetary ASC) M
+
+FROM rfm
+
+)
+
+SELECT
+
+user_id,
+
+R,
+
+F,
+
+M,
+
+CASE
+
+WHEN R>=4 AND F>=4 AND M>=4
+THEN 'Champions'
+
+WHEN F>=4 AND M>=4
+THEN 'Loyal Customers'
+
+WHEN R>=4
+THEN 'Recent Customers'
+
+WHEN R<=2
+THEN 'At Risk'
+
+ELSE 'Potential Customers'
+
+END customer_segment
+
+FROM scores
+
+ORDER BY customer_segment;
+
+-- ============================================================================
+-- STEP 15
+-- VIP Customers
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+HAVING SUM(price)>=100000
+
+ORDER BY revenue DESC;
+
+-- ============================================================================
+-- STEP 16
+-- Executive Customer Segmentation Dashboard
+-- ============================================================================
+
+SELECT
+
+COUNT(DISTINCT user_id) customers,
+
+COUNT(*) purchases,
+
+ROUND(SUM(price),2) revenue,
+
+ROUND(AVG(price),2) average_order_value,
+
+ROUND(
+
+SUM(price)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+revenue_per_customer
+
+FROM product_events
+
+WHERE event_name='purchase';
