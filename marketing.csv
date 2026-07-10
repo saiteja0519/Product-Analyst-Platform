@@ -1,0 +1,408 @@
+session_id,channel,campaign,source
+S102303,Email,Campaign_10,Email
+S105447,Email,Campaign_2,Email
+S105919,Google Ads,Campaign_7,Google Ads
+S106185,Facebook,Campaign_7,Facebook
+S109231,Google Ads,Campaign_3,Google Ads
+S110142,Facebook,Campaign_2,Facebook
+S120053,Instagram,Campaign_10,Instagram
+S123682,Referral,Campaign_1,Referral
+S127172,Email,Campaign_7,Email
+S128679,Facebook,Campaign_2,Facebook
+S130782,Instagram,Campaign_9,Instagram
+S132709,Instagram,Campaign_3,Instagram
+S132792,Google Ads,Campaign_8,Google Ads
+S138105,Email,Campaign_4,Email
+S138479,Instagram,Campaign_7,Instagram
+S139581,Referral,Campaign_10,Referral
+S142383,Google Ads,Campaign_9,Google Ads
+S144033,Email,Campaign_9,Email
+S146784,Google Ads,Campaign_4,Google Ads
+S147726,Organic,Campaign_5,Google
+S148174,Instagram,Campaign_6,Instagram
+S148693,Referral,Campaign_10,Referral
+S151470,Organic,Campaign_2,Google
+S153325,Referral,Campaign_7,Referral
+S156215,Instagram,Campaign_6,Instagram
+S156284,Facebook,Campaign_4,Facebook
+S156415,Facebook,Campaign_6,Facebook
+S157152,Email,Campaign_1,Email
+S161585,Facebook,Campaign_3,Facebook
+S168804,Facebook,Campaign_10,Facebook
+S176054,Instagram,Campaign_10,Instagram
+S177558,Google Ads,Campaign_8,Google Ads
+S177794,Organic,Campaign_4,Google
+S177804,Google Ads,Campaign_6,Google Ads
+S178086,Google Ads,Campaign_2,Google Ads
+S178463,Organic,Campaign_1,Google
+S178693,Google Ads,Campaign_10,Google Ads
+S182857,Google Ads,Campaign_5,Google Ads
+S182860,Organic,Campaign_6,Google
+S185168,Referral,Campaign_2,Referral
+S187889,Facebook,Campaign_8,Facebook
+S192410,Instagram,Campaign_1,Instagram
+S193972,Facebook,Campaign_4,Facebook
+S195674,Referral,Campaign_9,Referral
+S196446,Google Ads,Campaign_4,Google Ads
+S197758,Email,Campaign_9,Email
+S200617,Facebook,Campaign_9,Facebook
+S201377,Instagram,Campaign_10,Instagram
+S201514,Referral,Campaign_3,Referral
+S202988,Referral,Campaign_1,Referral
+S203831,Instagram,Campaign_10,Instagram
+S204053,Referral,Campaign_9,Referral
+S204180,Organic,Campaign_5,Google
+S204904,Google Ads,Campaign_1,Google Ads
+S204998,Facebook,Campaign_4,Facebook
+S206142,Referral,Campaign_10,Referral
+S208751,Facebook,Campaign_1,Facebook
+S211291,Instagram,Campaign_1,Instagram
+S211834,Organic,Campaign_7,Google
+S213206,Referral,Campaign_5,Referral
+S221761,Referral,Campaign_6,Referral
+S223172,Organic,Campaign_1,Google
+S227767,Facebook,Campaign_7,Facebook
+S231414,Google Ads,Campaign_7,Google Ads
+S232378,Email,Campaign_2,Email
+S232915,Facebook,Campaign_8,Facebook
+S238353,Email,Campaign_9,Email
+S238394,Organic,Campaign_3,Google
+S239116,Google Ads,Campaign_9,Google Ads
+S242723,Instagram,Campaign_9,Instagram
+S243790,Referral,Campaign_1,Referral
+S244037,Organic,Campaign_4,Google
+S244564,Email,Campaign_5,Email
+S246802,Facebook,Campaign_8,Facebook
+S249289,Instagram,Campaign_3,Instagram
+S250840,Organic,Campaign_6,Google
+S253184,Referral,Campaign_6,Referral
+S254506,Facebook,Campaign_5,Facebook
+S255061,Google Ads,Campaign_9,Google Ads
+S255875,Facebook,Campaign_1,Facebook
+S267112,Referral,Campaign_5,Referral
+S269654,Instagram,Campaign_1,Instagram
+S273438,Email,Campaign_5,Email
+S273580,Google Ads,Campaign_3,Google Ads
+S274912,Facebook,Campaign_7,Facebook
+S274987,Referral,Campaign_3,Referral
+S278852,Organic,Campaign_7,Google
+S279516,Email,Campaign_10,Email
+S281301,Referral,Campaign_4,Referral
+S297132,Instagram,Campaign_4,Instagram
+S299834,Email,Campaign_3,Email
+S300386,Instagram,Campaign_5,Instagram
+S302338,Email,Campaign_6,Email
+S308296,Instagram,Campaign_9,Instagram
+S311883,Google Ads,Campaign_4,Google Ads
+S312994,Referral,Campaign_3,Referral
+S315397,Email,Campaign_9,Email
+S322096,Referral,Campaign_4,Referral
+S325146,Google Ads,Campaign_5,Google Ads
+S331625,Referral,Campaign_9,Referral
+S331780,Google Ads,Campaign_7,Google Ads
+S333086,Google Ads,Campaign_10,Google Ads
+S334639,Google Ads,Campaign_6,Google Ads
+S335445,Organic,Campaign_9,Google
+S336047,Email,Campaign_2,Email
+S337547,Google Ads,Campaign_6,Google Ads
+S338564,Google Ads,Campaign_1,Google Ads
+S339303,Facebook,Campaign_7,Facebook
+S340341,Instagram,Campaign_5,Instagram
+S343467,Instagram,Campaign_5,Instagram
+S344315,Google Ads,Campaign_4,Google Ads
+S350405,Organic,Campaign_3,Google
+S355506,Google Ads,Campaign_1,Google Ads
+S355570,Email,Campaign_10,Email
+S356355,Facebook,Campaign_10,Facebook
+S356622,Email,Campaign_10,Email
+S356773,Google Ads,Campaign_10,Google Ads
+S362732,Google Ads,Campaign_4,Google Ads
+S362829,Referral,Campaign_1,Referral
+S363807,Facebook,Campaign_2,Facebook
+S364239,Referral,Campaign_8,Referral
+S365971,Google Ads,Campaign_9,Google Ads
+S366641,Email,Campaign_8,Email
+S367271,Referral,Campaign_6,Referral
+S368402,Google Ads,Campaign_7,Google Ads
+S371224,Instagram,Campaign_8,Instagram
+S375754,Google Ads,Campaign_3,Google Ads
+S385037,Google Ads,Campaign_4,Google Ads
+S385320,Organic,Campaign_7,Google
+S390421,Organic,Campaign_5,Google
+S391865,Instagram,Campaign_4,Instagram
+S397979,Referral,Campaign_4,Referral
+S399817,Google Ads,Campaign_2,Google Ads
+S400384,Google Ads,Campaign_8,Google Ads
+S400614,Email,Campaign_8,Email
+S400692,Referral,Campaign_6,Referral
+S402020,Instagram,Campaign_4,Instagram
+S405407,Instagram,Campaign_7,Instagram
+S408463,Organic,Campaign_10,Google
+S408545,Referral,Campaign_7,Referral
+S410401,Referral,Campaign_6,Referral
+S415344,Instagram,Campaign_10,Instagram
+S416503,Referral,Campaign_10,Referral
+S416528,Email,Campaign_9,Email
+S416613,Email,Campaign_1,Email
+S422623,Email,Campaign_2,Email
+S424703,Instagram,Campaign_8,Instagram
+S426711,Organic,Campaign_4,Google
+S427040,Email,Campaign_9,Email
+S432695,Instagram,Campaign_1,Instagram
+S434640,Email,Campaign_7,Email
+S437237,Email,Campaign_1,Email
+S439162,Google Ads,Campaign_5,Google Ads
+S439320,Instagram,Campaign_7,Instagram
+S445888,Facebook,Campaign_5,Facebook
+S446663,Instagram,Campaign_3,Instagram
+S447596,Instagram,Campaign_5,Instagram
+S447843,Email,Campaign_1,Email
+S448354,Referral,Campaign_9,Referral
+S449555,Google Ads,Campaign_8,Google Ads
+S456005,Referral,Campaign_8,Referral
+S457455,Organic,Campaign_9,Google
+S464831,Organic,Campaign_3,Google
+S465004,Email,Campaign_9,Email
+S468074,Google Ads,Campaign_7,Google Ads
+S468145,Instagram,Campaign_6,Instagram
+S469438,Instagram,Campaign_1,Instagram
+S472039,Google Ads,Campaign_8,Google Ads
+S472787,Email,Campaign_4,Email
+S476556,Instagram,Campaign_2,Instagram
+S477496,Facebook,Campaign_6,Facebook
+S477934,Referral,Campaign_3,Referral
+S478120,Referral,Campaign_2,Referral
+S480959,Organic,Campaign_2,Google
+S482199,Referral,Campaign_8,Referral
+S485415,Referral,Campaign_6,Referral
+S491774,Organic,Campaign_9,Google
+S496764,Referral,Campaign_7,Referral
+S498468,Referral,Campaign_9,Referral
+S498855,Email,Campaign_3,Email
+S499407,Instagram,Campaign_9,Instagram
+S501583,Instagram,Campaign_1,Instagram
+S501936,Google Ads,Campaign_6,Google Ads
+S510133,Email,Campaign_3,Email
+S512022,Google Ads,Campaign_3,Google Ads
+S515492,Google Ads,Campaign_1,Google Ads
+S515973,Instagram,Campaign_5,Instagram
+S517035,Facebook,Campaign_8,Facebook
+S523727,Facebook,Campaign_3,Facebook
+S525151,Organic,Campaign_3,Google
+S525187,Google Ads,Campaign_1,Google Ads
+S526673,Email,Campaign_5,Email
+S531262,Organic,Campaign_8,Google
+S532459,Instagram,Campaign_8,Instagram
+S533020,Email,Campaign_1,Email
+S534098,Email,Campaign_8,Email
+S538620,Google Ads,Campaign_4,Google Ads
+S541996,Email,Campaign_8,Email
+S545790,Instagram,Campaign_7,Instagram
+S546815,Instagram,Campaign_2,Instagram
+S551607,Email,Campaign_10,Email
+S553834,Organic,Campaign_4,Google
+S558176,Email,Campaign_5,Email
+S560485,Email,Campaign_9,Email
+S565504,Google Ads,Campaign_1,Google Ads
+S566732,Google Ads,Campaign_3,Google Ads
+S570325,Organic,Campaign_6,Google
+S570392,Organic,Campaign_3,Google
+S572407,Organic,Campaign_10,Google
+S572623,Email,Campaign_5,Email
+S576782,Facebook,Campaign_2,Facebook
+S578160,Organic,Campaign_2,Google
+S581395,Instagram,Campaign_3,Instagram
+S581992,Google Ads,Campaign_5,Google Ads
+S583671,Email,Campaign_10,Email
+S585331,Email,Campaign_9,Email
+S589887,Google Ads,Campaign_8,Google Ads
+S591081,Referral,Campaign_10,Referral
+S594580,Facebook,Campaign_1,Facebook
+S595002,Organic,Campaign_5,Google
+S595793,Facebook,Campaign_6,Facebook
+S596171,Instagram,Campaign_2,Instagram
+S601207,Instagram,Campaign_9,Instagram
+S602300,Organic,Campaign_5,Google
+S605904,Instagram,Campaign_3,Instagram
+S607753,Organic,Campaign_5,Google
+S612438,Facebook,Campaign_9,Facebook
+S612530,Instagram,Campaign_9,Instagram
+S613234,Google Ads,Campaign_4,Google Ads
+S617904,Email,Campaign_1,Email
+S618927,Organic,Campaign_10,Google
+S624108,Referral,Campaign_9,Referral
+S626428,Organic,Campaign_8,Google
+S626491,Referral,Campaign_10,Referral
+S627290,Referral,Campaign_5,Referral
+S628597,Instagram,Campaign_10,Instagram
+S629996,Facebook,Campaign_5,Facebook
+S631219,Email,Campaign_10,Email
+S638169,Email,Campaign_6,Email
+S642347,Google Ads,Campaign_10,Google Ads
+S644559,Email,Campaign_8,Email
+S648141,Email,Campaign_8,Email
+S649526,Instagram,Campaign_3,Instagram
+S649697,Email,Campaign_4,Email
+S649857,Referral,Campaign_5,Referral
+S651273,Google Ads,Campaign_1,Google Ads
+S652530,Organic,Campaign_1,Google
+S653081,Instagram,Campaign_2,Instagram
+S655736,Referral,Campaign_4,Referral
+S656639,Email,Campaign_7,Email
+S660957,Instagram,Campaign_1,Instagram
+S663244,Facebook,Campaign_6,Facebook
+S672536,Email,Campaign_4,Email
+S673149,Organic,Campaign_4,Google
+S674842,Referral,Campaign_5,Referral
+S675210,Facebook,Campaign_2,Facebook
+S676429,Facebook,Campaign_5,Facebook
+S679549,Email,Campaign_9,Email
+S680933,Facebook,Campaign_1,Facebook
+S681242,Organic,Campaign_6,Google
+S681456,Facebook,Campaign_7,Facebook
+S682316,Referral,Campaign_10,Referral
+S682959,Email,Campaign_1,Email
+S683347,Google Ads,Campaign_4,Google Ads
+S684194,Facebook,Campaign_6,Facebook
+S685193,Referral,Campaign_8,Referral
+S685196,Instagram,Campaign_1,Instagram
+S685864,Referral,Campaign_3,Referral
+S688678,Instagram,Campaign_3,Instagram
+S690016,Referral,Campaign_8,Referral
+S690984,Email,Campaign_6,Email
+S692354,Instagram,Campaign_7,Instagram
+S694229,Referral,Campaign_1,Referral
+S694316,Email,Campaign_5,Email
+S697766,Email,Campaign_6,Email
+S697983,Email,Campaign_9,Email
+S699743,Organic,Campaign_4,Google
+S700521,Email,Campaign_6,Email
+S700660,Facebook,Campaign_2,Facebook
+S701581,Google Ads,Campaign_5,Google Ads
+S701949,Organic,Campaign_6,Google
+S703727,Instagram,Campaign_9,Instagram
+S708093,Google Ads,Campaign_10,Google Ads
+S714867,Email,Campaign_7,Email
+S715551,Google Ads,Campaign_10,Google Ads
+S717661,Organic,Campaign_5,Google
+S718836,Referral,Campaign_6,Referral
+S720432,Referral,Campaign_1,Referral
+S725510,Facebook,Campaign_7,Facebook
+S728950,Organic,Campaign_8,Google
+S729094,Google Ads,Campaign_6,Google Ads
+S733561,Instagram,Campaign_5,Instagram
+S741603,Google Ads,Campaign_9,Google Ads
+S743473,Facebook,Campaign_3,Facebook
+S749838,Organic,Campaign_6,Google
+S753404,Organic,Campaign_4,Google
+S758589,Organic,Campaign_8,Google
+S760021,Email,Campaign_1,Email
+S768169,Instagram,Campaign_9,Instagram
+S768933,Google Ads,Campaign_4,Google Ads
+S770153,Facebook,Campaign_8,Facebook
+S774225,Referral,Campaign_9,Referral
+S776234,Facebook,Campaign_6,Facebook
+S782535,Google Ads,Campaign_2,Google Ads
+S782591,Email,Campaign_3,Email
+S783984,Google Ads,Campaign_1,Google Ads
+S786041,Instagram,Campaign_7,Instagram
+S787326,Referral,Campaign_9,Referral
+S789606,Organic,Campaign_1,Google
+S790203,Facebook,Campaign_1,Facebook
+S795556,Referral,Campaign_10,Referral
+S802191,Organic,Campaign_6,Google
+S802667,Instagram,Campaign_1,Instagram
+S803953,Organic,Campaign_9,Google
+S804505,Referral,Campaign_5,Referral
+S806848,Organic,Campaign_10,Google
+S809489,Facebook,Campaign_4,Facebook
+S811027,Facebook,Campaign_4,Facebook
+S811875,Google Ads,Campaign_5,Google Ads
+S812296,Facebook,Campaign_9,Facebook
+S812730,Facebook,Campaign_8,Facebook
+S813390,Referral,Campaign_2,Referral
+S817395,Facebook,Campaign_3,Facebook
+S817611,Google Ads,Campaign_5,Google Ads
+S817659,Organic,Campaign_1,Google
+S827691,Email,Campaign_9,Email
+S831063,Email,Campaign_2,Email
+S832377,Google Ads,Campaign_9,Google Ads
+S834764,Facebook,Campaign_9,Facebook
+S835962,Facebook,Campaign_5,Facebook
+S838726,Google Ads,Campaign_5,Google Ads
+S842776,Email,Campaign_4,Email
+S846385,Google Ads,Campaign_2,Google Ads
+S850827,Facebook,Campaign_10,Facebook
+S851606,Facebook,Campaign_9,Facebook
+S852146,Instagram,Campaign_1,Instagram
+S853258,Google Ads,Campaign_1,Google Ads
+S855408,Instagram,Campaign_1,Instagram
+S856086,Organic,Campaign_7,Google
+S856157,Organic,Campaign_2,Google
+S858931,Instagram,Campaign_7,Instagram
+S859143,Google Ads,Campaign_10,Google Ads
+S859489,Email,Campaign_8,Email
+S862400,Email,Campaign_6,Email
+S867934,Facebook,Campaign_6,Facebook
+S868677,Google Ads,Campaign_9,Google Ads
+S870214,Organic,Campaign_8,Google
+S871740,Email,Campaign_3,Email
+S872610,Organic,Campaign_8,Google
+S874320,Organic,Campaign_8,Google
+S875232,Facebook,Campaign_8,Facebook
+S875520,Instagram,Campaign_4,Instagram
+S876936,Google Ads,Campaign_3,Google Ads
+S878476,Email,Campaign_5,Email
+S882032,Facebook,Campaign_7,Facebook
+S882351,Google Ads,Campaign_6,Google Ads
+S883041,Facebook,Campaign_8,Facebook
+S885395,Instagram,Campaign_1,Instagram
+S888996,Organic,Campaign_8,Google
+S889245,Organic,Campaign_6,Google
+S902674,Instagram,Campaign_8,Instagram
+S904624,Google Ads,Campaign_5,Google Ads
+S904858,Facebook,Campaign_10,Facebook
+S907236,Email,Campaign_3,Email
+S907788,Email,Campaign_2,Email
+S909652,Instagram,Campaign_2,Instagram
+S909676,Facebook,Campaign_9,Facebook
+S910208,Referral,Campaign_2,Referral
+S911102,Facebook,Campaign_9,Facebook
+S912510,Instagram,Campaign_7,Instagram
+S913423,Email,Campaign_7,Email
+S913761,Google Ads,Campaign_10,Google Ads
+S916356,Google Ads,Campaign_9,Google Ads
+S916779,Google Ads,Campaign_8,Google Ads
+S923353,Instagram,Campaign_2,Instagram
+S924758,Facebook,Campaign_4,Facebook
+S929179,Referral,Campaign_10,Referral
+S935474,Instagram,Campaign_7,Instagram
+S936507,Email,Campaign_6,Email
+S947732,Email,Campaign_4,Email
+S950083,Google Ads,Campaign_2,Google Ads
+S950472,Referral,Campaign_10,Referral
+S953350,Instagram,Campaign_2,Instagram
+S955653,Email,Campaign_10,Email
+S956800,Instagram,Campaign_6,Instagram
+S956949,Email,Campaign_2,Email
+S958182,Instagram,Campaign_3,Instagram
+S961322,Facebook,Campaign_7,Facebook
+S961574,Organic,Campaign_10,Google
+S961957,Organic,Campaign_10,Google
+S963862,Instagram,Campaign_6,Instagram
+S964226,Instagram,Campaign_1,Instagram
+S965401,Organic,Campaign_4,Google
+S971002,Google Ads,Campaign_10,Google Ads
+S975373,Referral,Campaign_1,Referral
+S975679,Google Ads,Campaign_3,Google Ads
+S976258,Instagram,Campaign_9,Instagram
+S977633,Facebook,Campaign_7,Facebook
+S984756,Email,Campaign_10,Email
+S985296,Instagram,Campaign_4,Instagram
+S987025,Google Ads,Campaign_6,Google Ads
+S988283,Facebook,Campaign_10,Facebook
+S989203,Referral,Campaign_5,Referral
+S990247,Instagram,Campaign_6,Instagram
+S992512,Organic,Campaign_10,Google
+S992819,Organic,Campaign_10,Google
+S993892,Email,Campaign_7,Email
