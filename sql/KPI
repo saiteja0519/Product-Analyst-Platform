@@ -1,0 +1,559 @@
+-- ===========================================================
+-- Product Analytics Platform
+-- File: kpi.sql
+--
+-- Description:
+-- Product KPI Dashboard Queries
+--
+-- Skills Demonstrated:
+-- ✔ SQL Aggregations
+-- ✔ Date Functions
+-- ✔ Window Functions
+-- ✔ Business KPIs
+-- ✔ Product Metrics
+-- ✔ Revenue Analysis
+-- ===========================================================
+
+------------------------------------------------------------
+-- STEP 1
+-- Total Users
+------------------------------------------------------------
+
+SELECT
+COUNT(*) AS total_users
+FROM users;
+
+------------------------------------------------------------
+-- STEP 2
+-- Total Sessions
+------------------------------------------------------------
+
+SELECT
+COUNT(DISTINCT session_id) AS total_sessions
+FROM product_events;
+
+------------------------------------------------------------
+-- STEP 3
+-- Total Purchases
+------------------------------------------------------------
+
+SELECT
+COUNT(*) AS total_orders
+FROM product_events
+WHERE event_name='purchase';
+
+------------------------------------------------------------
+-- STEP 4
+-- Total Revenue
+------------------------------------------------------------
+
+SELECT
+ROUND(SUM(price),2) AS total_revenue
+FROM product_events
+WHERE event_name='purchase';
+
+------------------------------------------------------------
+-- STEP 5
+-- Average Order Value (AOV)
+------------------------------------------------------------
+
+SELECT
+
+ROUND(
+AVG(price),
+2
+) AS average_order_value
+
+FROM product_events
+
+WHERE event_name='purchase';
+
+------------------------------------------------------------
+-- STEP 6
+-- Conversion Rate
+------------------------------------------------------------
+
+WITH funnel AS(
+
+SELECT
+
+COUNT(DISTINCT CASE
+WHEN event_name='view'
+THEN session_id
+END) views,
+
+COUNT(DISTINCT CASE
+WHEN event_name='purchase'
+THEN session_id
+END) purchases
+
+FROM product_events
+
+)
+
+SELECT
+
+views,
+
+purchases,
+
+ROUND(
+
+purchases*100.0/views
+
+,2)
+
+AS conversion_rate
+
+FROM funnel;
+
+------------------------------------------------------------
+-- STEP 7
+-- Daily Active Users (DAU)
+------------------------------------------------------------
+
+SELECT
+
+DATE(timestamp) activity_date,
+
+COUNT(DISTINCT user_id) dau
+
+FROM product_events
+
+GROUP BY activity_date
+
+ORDER BY activity_date;
+
+------------------------------------------------------------
+-- STEP 8
+-- Weekly Active Users (WAU)
+------------------------------------------------------------
+
+SELECT
+
+YEAR(timestamp) year,
+
+WEEK(timestamp) week,
+
+COUNT(DISTINCT user_id) wau
+
+FROM product_events
+
+GROUP BY year,week
+
+ORDER BY year,week;
+
+------------------------------------------------------------
+-- STEP 9
+-- Monthly Active Users (MAU)
+------------------------------------------------------------
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+COUNT(DISTINCT user_id) mau
+
+FROM product_events
+
+GROUP BY month
+
+ORDER BY month;
+
+------------------------------------------------------------
+-- STEP 10
+-- Stickiness (DAU / MAU)
+------------------------------------------------------------
+
+WITH daily AS(
+
+SELECT
+
+DATE(timestamp) day,
+
+COUNT(DISTINCT user_id) dau
+
+FROM product_events
+
+GROUP BY day
+
+),
+
+monthly AS(
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+COUNT(DISTINCT user_id) mau
+
+FROM product_events
+
+GROUP BY month
+
+)
+
+SELECT
+
+AVG(dau) average_dau,
+
+(SELECT AVG(mau) FROM monthly) average_mau,
+
+ROUND(
+
+AVG(dau)
+
+/
+
+(SELECT AVG(mau) FROM monthly)
+
+*100
+
+,2)
+
+AS stickiness_percentage
+
+FROM daily;
+
+------------------------------------------------------------
+-- STEP 11
+-- Revenue by Month
+------------------------------------------------------------
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+SUM(price) revenue,
+
+COUNT(*) orders
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY month
+
+ORDER BY month;
+
+------------------------------------------------------------
+-- STEP 12
+-- Revenue by Device
+------------------------------------------------------------
+
+SELECT
+
+u.device,
+
+SUM(price) revenue,
+
+COUNT(*) purchases
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE event_name='purchase'
+
+GROUP BY u.device
+
+ORDER BY revenue DESC;
+
+------------------------------------------------------------
+-- STEP 13
+-- Revenue by Country
+------------------------------------------------------------
+
+SELECT
+
+u.country,
+
+SUM(price) revenue,
+
+COUNT(*) purchases
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE event_name='purchase'
+
+GROUP BY u.country
+
+ORDER BY revenue DESC;
+
+------------------------------------------------------------
+-- STEP 14
+-- Revenue by Marketing Channel
+------------------------------------------------------------
+
+SELECT
+
+m.channel,
+
+SUM(price) revenue,
+
+COUNT(*) purchases
+
+FROM product_events p
+
+JOIN marketing m
+
+ON p.session_id=m.session_id
+
+WHERE event_name='purchase'
+
+GROUP BY m.channel
+
+ORDER BY revenue DESC;
+
+------------------------------------------------------------
+-- STEP 15
+-- Top Selling Products
+------------------------------------------------------------
+
+SELECT
+
+product,
+
+COUNT(*) total_sales,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY product
+
+ORDER BY revenue DESC;
+
+------------------------------------------------------------
+-- STEP 16
+-- Average Revenue Per User (ARPU)
+------------------------------------------------------------
+
+SELECT
+
+ROUND(
+
+SUM(price)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+AS ARPU
+
+FROM product_events
+
+WHERE event_name='purchase';
+
+------------------------------------------------------------
+-- STEP 17
+-- Purchase Frequency
+------------------------------------------------------------
+
+SELECT
+
+ROUND(
+
+COUNT(*)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+AS purchases_per_customer
+
+FROM product_events
+
+WHERE event_name='purchase';
+
+------------------------------------------------------------
+-- STEP 18
+-- Repeat Purchase Rate
+------------------------------------------------------------
+
+WITH customer_orders AS(
+
+SELECT
+
+user_id,
+
+COUNT(*) total_orders
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+COUNT(*) customers,
+
+SUM(
+
+CASE
+
+WHEN total_orders>1
+
+THEN 1
+
+ELSE 0
+
+END
+
+) repeat_customers,
+
+ROUND(
+
+SUM(
+
+CASE
+
+WHEN total_orders>1
+
+THEN 1
+
+ELSE 0
+
+END
+
+)
+
+*100.0
+
+/
+
+COUNT(*)
+
+,2)
+
+AS repeat_purchase_rate
+
+FROM customer_orders;
+
+------------------------------------------------------------
+-- STEP 19
+-- Executive KPI Dashboard
+------------------------------------------------------------
+
+SELECT
+
+COUNT(DISTINCT user_id) users,
+
+COUNT(DISTINCT session_id) sessions,
+
+COUNT(
+
+CASE
+
+WHEN event_name='purchase'
+
+THEN 1
+
+END
+
+) purchases,
+
+ROUND(
+
+SUM(
+
+CASE
+
+WHEN event_name='purchase'
+
+THEN price
+
+ELSE 0
+
+END
+
+),2)
+
+revenue,
+
+ROUND(
+
+AVG(
+
+CASE
+
+WHEN event_name='purchase'
+
+THEN price
+
+END
+
+),2)
+
+AOV
+
+FROM product_events;
+
+------------------------------------------------------------
+-- STEP 20
+-- Product Dashboard Summary
+------------------------------------------------------------
+
+SELECT
+
+'Users' KPI,
+COUNT(DISTINCT user_id) Value
+
+FROM product_events
+
+UNION ALL
+
+SELECT
+
+'Sessions',
+COUNT(DISTINCT session_id)
+
+FROM product_events
+
+UNION ALL
+
+SELECT
+
+'Orders',
+COUNT(*)
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+UNION ALL
+
+SELECT
+
+'Revenue',
+ROUND(SUM(price),2)
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+UNION ALL
+
+SELECT
+
+'AOV',
+ROUND(AVG(price),2)
+
+FROM product_events
+
+WHERE event_name='purchase';
