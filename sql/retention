@@ -1,0 +1,512 @@
+-- ============================================================================
+-- Product Analytics Platform
+-- File Name : retention.sql
+--
+-- Business Problem:
+-- Analyze customer retention, repeat purchases, and cohort behavior.
+--
+-- Tables Used:
+-- 1. users
+-- 2. product_events
+--
+-- Skills Demonstrated:
+-- ✔ SQL Aggregations
+-- ✔ Common Table Expressions (CTEs)
+-- ✔ Date Functions
+-- ✔ Customer Retention Analysis
+-- ✔ Cohort Analysis
+-- ✔ Repeat Customer Analysis
+-- ✔ Business KPI Reporting
+-- ============================================================================
+
+-- ============================================================================
+-- STEP 1
+-- View Purchase Data
+-- ============================================================================
+
+SELECT *
+FROM product_events
+WHERE event_name = 'purchase'
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 2
+-- Total Customers
+-- ============================================================================
+
+SELECT
+COUNT(DISTINCT user_id) AS total_customers
+FROM product_events
+WHERE event_name='purchase';
+
+-- ============================================================================
+-- STEP 3
+-- First Purchase Date of Every Customer
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+MIN(DATE(timestamp)) AS first_purchase
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY first_purchase;
+
+-- ============================================================================
+-- STEP 4
+-- Last Purchase Date
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+MAX(DATE(timestamp)) AS last_purchase
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id;
+
+-- ============================================================================
+-- STEP 5
+-- Total Orders Per Customer
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) AS total_orders,
+
+SUM(price) AS lifetime_revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY total_orders DESC;
+
+-- ============================================================================
+-- STEP 6
+-- Repeat Customers
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) AS purchases
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+HAVING COUNT(*) > 1
+
+ORDER BY purchases DESC;
+
+-- ============================================================================
+-- STEP 7
+-- Repeat Customer Rate
+-- ============================================================================
+
+WITH customer_orders AS
+(
+
+SELECT
+
+user_id,
+
+COUNT(*) total_orders
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+COUNT(*) AS customers,
+
+SUM(
+
+CASE
+
+WHEN total_orders>1
+
+THEN 1
+
+ELSE 0
+
+END
+
+) repeat_customers,
+
+ROUND(
+
+SUM(
+
+CASE
+
+WHEN total_orders>1
+
+THEN 1
+
+ELSE 0
+
+END
+
+)
+
+*100
+
+/
+
+COUNT(*)
+
+,2)
+
+AS repeat_customer_rate
+
+FROM customer_orders;
+
+-- ============================================================================
+-- STEP 8
+-- Monthly Active Customers
+-- ============================================================================
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+COUNT(DISTINCT user_id) active_customers
+
+FROM product_events
+
+GROUP BY month
+
+ORDER BY month;
+
+-- ============================================================================
+-- STEP 9
+-- Monthly Orders
+-- ============================================================================
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+COUNT(*) orders
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY month
+
+ORDER BY month;
+
+-- ============================================================================
+-- STEP 10
+-- Monthly Revenue
+-- ============================================================================
+
+SELECT
+
+DATE_FORMAT(timestamp,'%Y-%m') month,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY month
+
+ORDER BY month;
+
+-- ============================================================================
+-- STEP 11
+-- Average Revenue Per Customer
+-- ============================================================================
+
+SELECT
+
+ROUND(
+
+SUM(price)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+AS revenue_per_customer
+
+FROM product_events
+
+WHERE event_name='purchase';
+
+-- ============================================================================
+-- STEP 12
+-- Customer Lifetime Value
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) orders,
+
+SUM(price) lifetime_value,
+
+AVG(price) average_order_value
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY lifetime_value DESC
+
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 13
+-- Cohort Assignment
+-- ============================================================================
+
+WITH first_purchase AS
+(
+
+SELECT
+
+user_id,
+
+MIN(DATE(timestamp)) first_purchase
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+user_id,
+
+DATE_FORMAT(first_purchase,'%Y-%m')
+
+AS cohort_month
+
+FROM first_purchase
+
+ORDER BY cohort_month;
+
+-- ============================================================================
+-- STEP 14
+-- Cohort Size
+-- ============================================================================
+
+WITH first_purchase AS
+(
+
+SELECT
+
+user_id,
+
+MIN(DATE(timestamp)) first_purchase
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+)
+
+SELECT
+
+DATE_FORMAT(first_purchase,'%Y-%m')
+
+AS cohort,
+
+COUNT(*) customers
+
+FROM first_purchase
+
+GROUP BY cohort
+
+ORDER BY cohort;
+
+-- ============================================================================
+-- STEP 15
+-- Returning Users by Device
+-- ============================================================================
+
+SELECT
+
+u.device,
+
+COUNT(DISTINCT p.user_id)
+
+AS returning_customers
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE p.event_name='purchase'
+
+AND u.user_type='Returning'
+
+GROUP BY u.device
+
+ORDER BY returning_customers DESC;
+
+-- ============================================================================
+-- STEP 16
+-- Returning Users by Country
+-- ============================================================================
+
+SELECT
+
+u.country,
+
+COUNT(DISTINCT p.user_id)
+
+AS returning_customers
+
+FROM product_events p
+
+JOIN users u
+
+ON p.user_id=u.user_id
+
+WHERE p.event_name='purchase'
+
+AND u.user_type='Returning'
+
+GROUP BY u.country
+
+ORDER BY returning_customers DESC;
+
+-- ============================================================================
+-- STEP 17
+-- Purchase Frequency
+-- ============================================================================
+
+SELECT
+
+ROUND(
+
+COUNT(*)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+AS average_orders_per_customer
+
+FROM product_events
+
+WHERE event_name='purchase';
+
+-- ============================================================================
+-- STEP 18
+-- Top Loyal Customers
+-- ============================================================================
+
+SELECT
+
+user_id,
+
+COUNT(*) purchases,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY user_id
+
+ORDER BY purchases DESC,
+revenue DESC
+
+LIMIT 20;
+
+-- ============================================================================
+-- STEP 19
+-- Purchase Trend
+-- ============================================================================
+
+SELECT
+
+DATE(timestamp) purchase_date,
+
+COUNT(*) purchases,
+
+SUM(price) revenue
+
+FROM product_events
+
+WHERE event_name='purchase'
+
+GROUP BY purchase_date
+
+ORDER BY purchase_date;
+
+-- ============================================================================
+-- STEP 20
+-- Executive Retention Dashboard
+-- ============================================================================
+
+SELECT
+
+COUNT(DISTINCT user_id) AS Customers,
+
+COUNT(*) AS Purchases,
+
+ROUND(SUM(price),2) AS Revenue,
+
+ROUND(AVG(price),2) AS Average_Order_Value,
+
+ROUND(
+
+SUM(price)
+
+/
+
+COUNT(DISTINCT user_id)
+
+,2)
+
+AS Revenue_Per_Customer
+
+FROM product_events
+
+WHERE event_name='purchase';
