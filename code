@@ -1,0 +1,668 @@
+# =============================================================================
+# PRODUCT ANALYTICS PLATFORM
+# Step 1: Import Required Libraries
+#
+# Import the Python libraries required for data manipulation,
+# analysis, visualization, and date/time processing.
+# =============================================================================
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+# =============================================================================
+# Configure Notebook Settings
+# =============================================================================
+
+# Use the ggplot style for better-looking charts
+plt.style.use("ggplot")
+
+# Display all columns when printing DataFrames
+pd.set_option("display.max_columns", None)
+
+print("Libraries Imported Successfully")
+
+# =============================================================================
+# Step 2: Upload CSV Files (Google Colab)
+#
+# Upload the required datasets:
+# 1. users.csv
+# 2. product_events.csv
+# 3. marketing.csv
+# =============================================================================
+
+from google.colab import files
+
+uploaded = files.upload()
+
+# =============================================================================
+# Step 3: Verify Uploaded Files
+#
+# Display the files available in the current working directory.
+# =============================================================================
+
+import os
+
+print(os.listdir())
+
+# =============================================================================
+# Step 4: Load CSV Files into Pandas DataFrames
+#
+# Read each dataset into memory for analysis.
+# =============================================================================
+
+users = pd.read_csv("users (1) (3).csv")
+
+events = pd.read_csv("product_events (1) (3).csv")
+
+marketing = pd.read_csv("marketing (1) (2).csv")
+
+print("Datasets Loaded Successfully!")
+
+# =============================================================================
+# Step 5: Display Dataset Dimensions
+#
+# Check the number of rows and columns in each dataset.
+# =============================================================================
+
+print("Users Dataset Shape:", users.shape)
+
+print("Events Dataset Shape:", events.shape)
+
+print("Marketing Dataset Shape:", marketing.shape)
+
+# =============================================================================
+# Step 6: Product Revenue by User Type
+#
+# Create a pivot table showing the total revenue generated
+# by each product for different user types.
+#
+# NOTE:
+# This cell requires a merged DataFrame named 'df'.
+# Execute the merge step before running this cell.
+# =============================================================================
+
+product_revenue_by_user_type = df.pivot_table(
+    index='product',
+    columns='user_type',
+    values='price',
+    aggfunc='sum'
+)
+
+display(product_revenue_by_user_type)
+
+# =============================================================================
+# Step 7: Preview the Datasets
+#
+# Display the first five records of each dataset.
+# =============================================================================
+
+users.head()
+
+events.head()
+
+marketing.head()
+
+# =============================================================================
+# Step 8: Check Dataset Dimensions Again
+#
+# Verify that all datasets have been loaded correctly.
+# =============================================================================
+
+print(users.shape)
+
+print(events.shape)
+
+print(marketing.shape)
+
+# =============================================================================
+# Step 9: Dataset Information
+#
+# Display column names, data types, and non-null values.
+# =============================================================================
+
+users.info()
+
+events.info()
+
+marketing.info()
+
+# =============================================================================
+# Step 10: Missing Value Analysis
+#
+# Identify missing values in each dataset.
+# =============================================================================
+
+users.isnull().sum()
+
+events.isnull().sum()
+
+marketing.isnull().sum()
+
+# =============================================================================
+# Step 11: Duplicate Record Analysis
+#
+# Check for duplicate records that may affect analysis.
+# =============================================================================
+
+users.duplicated().sum()
+
+events.duplicated().sum()
+
+marketing.duplicated().sum()
+
+# =============================================================================
+# Step 12: Convert Date Columns
+#
+# Convert timestamp columns into datetime format for
+# time-based analysis such as monthly trends and retention.
+# =============================================================================
+
+events["timestamp"] = pd.to_datetime(events["timestamp"])
+
+print("Timestamp column converted successfully.")
+  
+# =============================================================================
+# PRODUCT ANALYTICS PLATFORM
+# STEP 13: Convert Signup Date to Datetime Format
+#
+# Convert the signup_date column into datetime format
+# to enable time-based analysis such as monthly signups,
+# customer cohorts, and retention analysis.
+# =============================================================================
+
+users["signup_date"] = pd.to_datetime(users["signup_date"])
+
+
+# =============================================================================
+# STEP 14: Merge Users and Product Events
+#
+# Merge the users dataset with product events
+# using the common user_id column.
+# =============================================================================
+
+df = events.merge(users, on="user_id")
+
+
+# =============================================================================
+# STEP 15: Merge Marketing Data
+#
+# Merge the marketing dataset using session_id
+# to associate every event with its marketing channel.
+# =============================================================================
+
+df = df.merge(marketing, on="session_id")
+
+
+# =============================================================================
+# STEP 16: Display Merged Dataset
+#
+# Preview the first five rows of the merged dataset.
+# =============================================================================
+
+df.head()
+
+
+# =============================================================================
+# STEP 17: Dataset Shape
+#
+# Display the number of rows and columns
+# after merging all datasets.
+# =============================================================================
+
+df.shape
+
+
+# =============================================================================
+# STEP 18: Dataset Information
+#
+# Display data types, missing values,
+# and column information.
+# =============================================================================
+
+df.info()
+
+
+# =============================================================================
+# STEP 19: Summary Statistics
+#
+# Generate descriptive statistics for
+# numerical columns.
+# =============================================================================
+
+df.describe()
+
+
+# =============================================================================
+# STEP 20: Filter Purchase Events
+#
+# Create a new DataFrame containing
+# only completed purchase events.
+# =============================================================================
+
+purchase_df = df[df["event_name"] == "purchase"]
+
+
+# =============================================================================
+# STEP 21: Calculate Total Revenue
+#
+# Sum all purchase prices to determine
+# total revenue.
+# =============================================================================
+
+purchase_df["price"].sum()
+
+
+# =============================================================================
+# STEP 22: Calculate Total Orders
+#
+# Count the total number of purchase records.
+# =============================================================================
+
+purchase_df.shape[0]
+
+
+# =============================================================================
+# STEP 23: Calculate Average Order Value (AOV)
+#
+# Compute the average amount spent
+# per purchase.
+# =============================================================================
+
+purchase_df["price"].mean()
+
+
+# =============================================================================
+# STEP 24: Count Unique Users
+#
+# Determine the number of unique users
+# in the platform.
+# =============================================================================
+
+df["user_id"].nunique()
+
+
+# =============================================================================
+# STEP 25: Funnel Analysis
+#
+# Count the number of unique sessions
+# at each stage of the customer journey.
+# =============================================================================
+
+funnel = df.groupby("event_name")["session_id"].nunique()
+
+funnel
+
+
+# =============================================================================
+# STEP 26: Visualize Conversion Funnel
+
+# Create a bar chart showing
+# the number of sessions
+# at each funnel stage.
+# =============================================================================
+
+funnel.plot(
+    kind="bar",
+    figsize=(8,5)
+)
+
+plt.title("Conversion Funnel")
+
+plt.xlabel("Event")
+
+plt.ylabel("Sessions")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 27: Revenue by Device
+# Calculate total revenue
+# generated by each device type.
+# =============================================================================
+
+device = purchase_df.groupby("device")["price"].sum()
+
+device
+
+
+# =============================================================================
+# STEP 28: Visualize Revenue by Device
+# Compare revenue across
+# different device categories.
+# =============================================================================
+
+device.plot(
+    kind="bar",
+    figsize=(8,5)
+)
+
+plt.title("Revenue by Device")
+
+plt.xlabel("Device")
+
+plt.ylabel("Revenue")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 29: Preview Merged Dataset
+# Display the first ten rows
+# of the merged dataset.
+# =============================================================================
+
+df.head(10)
+
+
+# =============================================================================
+# STEP 30: Display Dataset Dimensions
+# Print the number of rows
+# and columns.
+# =============================================================================
+
+print("Rows :", df.shape[0])
+
+print("Columns :", df.shape[1])
+
+
+# =============================================================================
+# STEP 31: Check Data Types
+# Display the data type
+# of each column.
+# =============================================================================
+
+df.dtypes
+
+
+# =============================================================================
+# STEP 32: Missing Value Analysis
+# Identify missing values
+# in every column.
+# =============================================================================
+
+df.isnull().sum()
+
+
+# =============================================================================
+# STEP 33: Duplicate Record Analysis
+# Identify duplicate rows
+# in the merged dataset.
+# =============================================================================
+
+df.duplicated().sum()
+
+
+# =============================================================================
+# STEP 34: Unique Users
+# Count distinct users.
+# =============================================================================
+
+df.user_id.nunique()
+
+
+# =============================================================================
+# STEP 35: Unique Sessions
+# Count distinct user sessions.
+# =============================================================================
+
+df.session_id.nunique()
+
+
+# =============================================================================
+# STEP 36: Event Distribution
+# Count the occurrence of
+# each event type.
+# =============================================================================
+
+event_count = df.event_name.value_counts()
+
+event_count
+  
+# =============================================================================
+# STEP 37: Event Distribution Visualization
+# Visualize the frequency of each event type (View, Add to Cart,
+# Checkout, Purchase) to understand user activity.
+# =============================================================================
+
+event_count.plot(
+    kind="bar",
+    figsize=(8,5)
+)
+
+plt.title("Event Distribution")
+plt.xlabel("Event Type")
+plt.ylabel("Number of Events")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 38: Filter Purchase Transactions
+# Create a new DataFrame containing only purchase events.
+# This dataset will be used for revenue and sales analysis.
+# =============================================================================
+
+purchase = df[df.event_name == "purchase"]
+
+
+# =============================================================================
+# STEP 39: Calculate Total Revenue
+# Sum the price of all purchase transactions.
+# =============================================================================
+
+total_revenue = purchase.price.sum()
+
+print("Total Revenue:", total_revenue)
+
+
+# =============================================================================
+# STEP 40: Calculate Total Orders
+# Count the total number of completed purchases.
+# =============================================================================
+
+orders = purchase.shape[0]
+
+print("Total Orders:", orders)
+
+
+# =============================================================================
+# STEP 41: Calculate Average Order Value (AOV)
+# Compute the average amount spent per purchase.
+# =============================================================================
+
+aov = purchase.price.mean()
+
+print("Average Order Value:", aov)
+
+
+# =============================================================================
+# STEP 42: Calculate Average Revenue Per User (ARPU)
+# Divide total revenue by the number of unique users.
+# =============================================================================
+
+arpu = total_revenue / df.user_id.nunique()
+
+print("Average Revenue Per User:", arpu)
+
+
+# =============================================================================
+# STEP 43: Count Total Products Sold
+# Determine the total number of purchased products.
+# =============================================================================
+
+purchase["product"].count()
+
+
+# =============================================================================
+# STEP 44: Count Unique Purchasing Customers
+# Determine how many unique customers completed purchases.
+# =============================================================================
+
+purchase.user_id.nunique()
+
+
+# =============================================================================
+# STEP 45: Revenue Generated by Each Product
+# Calculate the total revenue contributed by each product.
+# =============================================================================
+
+product_revenue = purchase.groupby("product")["price"].sum()
+
+product_revenue
+
+
+# =============================================================================
+# STEP 46: Revenue by Product Visualization
+# Display product-wise revenue using a bar chart.
+# =============================================================================
+
+product_revenue.plot(
+    kind="bar",
+    figsize=(10,5)
+)
+
+plt.title("Revenue by Product")
+plt.xlabel("Product")
+plt.ylabel("Revenue")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 47: Top Selling Products
+# Count how many times each product was purchased.
+# =============================================================================
+
+purchase["product"].value_counts()
+
+
+# =============================================================================
+# STEP 48: Top Selling Products Visualization
+# Visualize the number of purchases for each product.
+# =============================================================================
+
+purchase["product"].value_counts().plot(
+    kind="bar"
+)
+
+plt.title("Top Selling Products")
+plt.xlabel("Product")
+plt.ylabel("Number of Purchases")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 49: Customer Type Distribution
+# Compare New vs Returning customers.
+# =============================================================================
+
+customer = df.user_type.value_counts()
+
+customer
+
+
+# =============================================================================
+# STEP 50: Customer Type Distribution Chart
+# Display customer distribution as a pie chart.
+# =============================================================================
+
+customer.plot(
+    kind="pie",
+    autopct="%1.1f%%"
+)
+
+plt.title("Customer Type Distribution")
+plt.ylabel("")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 51: Revenue by Country
+# Calculate total revenue generated from each country.
+# =============================================================================
+
+country = purchase.groupby("country")["price"].sum()
+
+country
+
+
+# =============================================================================
+# STEP 52: Revenue by Country Visualization
+# Compare country-wise revenue using a bar chart.
+# =============================================================================
+
+country.plot(
+    kind="bar",
+    figsize=(8,5)
+)
+
+plt.title("Revenue by Country")
+plt.xlabel("Country")
+plt.ylabel("Revenue")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 53: Revenue by Device
+# Calculate revenue generated by each device category.
+# =============================================================================
+
+device = purchase.groupby("device")["price"].sum()
+
+device
+
+
+# =============================================================================
+# STEP 54: Top 10 Customers by Revenue
+# Identify customers generating the highest revenue.
+# =============================================================================
+
+purchase.groupby("user_id")["price"] \
+        .sum() \
+        .sort_values(ascending=False) \
+        .head(10)
+
+
+# =============================================================================
+# STEP 55: Visualize Top 10 Customers
+# Display the highest revenue-generating customers.
+# =============================================================================
+
+top_customer = purchase.groupby("user_id")["price"] \
+                       .sum() \
+                       .sort_values(ascending=False) \
+                       .head(10)
+
+top_customer.plot(kind="bar")
+
+plt.title("Top 10 Customers by Revenue")
+plt.xlabel("User ID")
+plt.ylabel("Revenue")
+
+plt.show()
+
+
+# =============================================================================
+# STEP 56: Average Customer Spend by Country
+#
+# Calculate the average purchase amount for each country.
+# =============================================================================
+
+purchase.groupby("country")["price"].mean()
+
+
+# =============================================================================
+# STEP 57: Average Customer Spend by Device
+#
+# Calculate the average purchase amount for each device type.
+# =============================================================================
+
+purchase.groupby("device")["price"].mean()
+
+
